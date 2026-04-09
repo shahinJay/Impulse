@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Impulse.vcxproj" />
+  <Project Path="Impulse.vcxproj" Id="d75312e0-43d7-486f-8edc-28b082ddd15e" />
 </Solution>
