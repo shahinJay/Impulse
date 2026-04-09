@@ -15,6 +15,8 @@ First major milestone. Implemented 4th order Runge-Kutta integrator from first p
 
 *"The circles obey gravity now."*
 
+![Orbit Demo](./assets/github/0409.gif)
+<br>
 *2 bodies orbiting an invisible mass*
 
 ---
