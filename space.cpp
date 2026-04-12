@@ -1,17 +1,33 @@
 #include "space.h"
 #include <raylib.h>
+#include <iostream>
 
-void Space::draw(vec2& global_offset) {
+Space::Space() {
+	set_earth();
+	set_moon();
+}
 
-	moon_radius = earth_radius / 2;
-	moon_pos.x = earth_pos.x + (30 * earth_radius);
-	moon_pos.y = earth_pos.y;
+void Space::set_earth() {
+	earth.state.position = { 300, 300 };
+	earth.mass = 5e4;
+	earth.radius = 60;
+	earth.color = BLUE;
+}
 
-	earth_pos = add_vecs(global_offset, earth_pos);
-	moon_pos = add_vecs(global_offset, moon_pos);
-	
-	DrawCircle(earth_pos.x, earth_pos.y, earth_radius, earth_color);
+void Space::set_moon() {
+	moon.state.position = { 0,300 };
+	moon.state.velocity = { 0, 90 };
+	moon.state.position.x = earth.state.position.x + (60.32 * earth.radius);
+	moon.mass = 1e4;
+	moon.radius = earth.radius / 2;
+	moon.color = GRAY;
+}
 
-	DrawCircle(moon_pos.x, moon_pos.y, moon_radius, moon_color);
+// "Mankind was born on Earth. It was never meant to die here." 
+
+void Space::draw(vec2& cam_pos, double& scale, vec2& screen_center) {
+
+	DrawCircle(scale * (earth.state.position.x - cam_pos.x) + screen_center.x, scale * (earth.state.position.y -  cam_pos.y ) + screen_center.y, scale * earth.radius, earth.color);
+	DrawCircle(scale * (moon.state.position.x - cam_pos.x) + screen_center.x, scale * (moon.state.position.y - cam_pos.y) + screen_center.y, scale * moon.radius, moon.color);
 
 }
