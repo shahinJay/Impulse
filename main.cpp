@@ -16,10 +16,10 @@ int main() {
     cam2 camera;
 
     Space space;
+    space.generate_space();
     Physics physics(space);
 
     double scale = 1.00;
-
 
     InitWindow(window_size.x, window_size.y, "Impulse: 2D Orbital Dynamics and Mission Control Simulator");
     SetTargetFPS(60);
@@ -30,7 +30,8 @@ int main() {
         
         camera.take_input();
         scale = camera.zoom;
-        physics.apply_gravity();
+        physics.apply_gravity(space.bodies);
+
         space.draw(camera.position, scale, screen_center);
         
         EndDrawing();

@@ -12,18 +12,16 @@
 
 class Physics {
 public:
-	const double G = 6e3;
+	const double G = 6e4;
+	double hardcoded_delta = 0.001;
 
 	Space& space;
 	
 	Physics(Space& space);
 
-	vec2 compute_accel(const vec2& position);
 
-	state derive(const state& yn);
+	vec2 compute_accel(const vec2& position, Space::body& other);
 
-	void circularize(const state& yn);
-
-	void apply_gravity();
+	void apply_gravity(std::vector<Space::body>& bodies);
 
 };

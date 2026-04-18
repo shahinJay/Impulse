@@ -11,44 +11,40 @@ Physics::Physics(Space& space):space(space) {
 
 }
 
-vec2 Physics::compute_accel(const vec2& position) {
-	
-	double dist = distance(position, this->space.earth.state.position);
-	vec2 dir = direction(position, this->space.earth.state.position);
-	vec2 accel = scale_vec(dir, (this->G * this->space.earth.mass) / (dist * dist));
+
+vec2 Physics::compute_accel(const vec2& position, Space::body& other) {
+
+	double dist = distance(position, other.state.position);
+	vec2 dir = direction(position, other.state.position);
+	vec2 accel = scale_vec(dir, (this->G * other.mass) / ((dist * dist) + 0.001));
 
 	return accel;
 }
 
-state Physics::derive(const state& yn) {
-	state d;
-	d.position = yn.velocity;
-	d.velocity = compute_accel(yn.position);
-	return d;
-}
 
-void Physics::circularize(const state& yn) {
-	
-}
+void Physics::apply_gravity(std::vector<Space::body>& bodies) {
 
-void Physics::apply_gravity() {
-	
-	state *yn = &this->space.moon.state;
-	// USING RK4 integration method
-	double delta = 1.0 / 60.0;
+	std::vector<state> old_states;
+	for (auto& b : bodies) old_states.push_back(b.state);
 
+	std::vector<vec2> accels(bodies.size(), { 0,0 });
 
-	state k1, k2, k3, k4;
-	state sum;
+	for (int y = 0; y < bodies.size(); y++) {
+		for (int z = 0; z < bodies.size(); z++) {
+			if (&bodies[y] == &bodies[z]) continue;
 
-	k1 = scale_state(derive(*yn), delta);
-	k2 = scale_state(derive(add_states(*yn, scale_state(k1, 0.5f))), delta);
-	k3 = scale_state(derive(add_states(*yn, scale_state(k2, 0.5f))), delta);
-	k4 = scale_state(derive(add_states(*yn, k3)), delta);
+			accels[y] = add_vecs(compute_accel(old_states[y].position, bodies[z]), accels[y]);
 
-	sum = scale_state(add_states(k1, add_states(scale_state(k2, 2), add_states(scale_state(k3, 2), k4))), 1.0f/6.0f);
+		}
+	}
 
-	
-	*yn = add_states(*yn, sum);
-	
+	for (int i = 0; i < bodies.size(); i++) {
+		bodies[i].state.velocity = add_vecs(old_states[i].velocity, scale_vec(accels[i], hardcoded_delta));
+		bodies[i].state.position = add_vecs(old_states[i].position, scale_vec(bodies[i].state.velocity, hardcoded_delta));
+
+		//std::cout << bodies[i].state.position.x << std::endl;
+	}
+
+	accels.clear();
+	old_states.clear();
 }
