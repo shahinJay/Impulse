@@ -19,6 +19,8 @@ int main() {
     space.generate_space();
     Physics physics(space);
 
+    physics.circularize(space.bodies[1], space.bodies[0]);
+
     double scale = 1.00;
 
     InitWindow(window_size.x, window_size.y, "Impulse: 2D Orbital Dynamics and Mission Control Simulator");
@@ -36,7 +38,6 @@ int main() {
         
         EndDrawing();
     }
-
 
     CloseWindow();
     return 0;

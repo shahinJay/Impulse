@@ -5,6 +5,21 @@
 struct vec2 {
     double x;
     double y;
+
+    vec2 operator+(const vec2& other) const {
+        return { x + other.x,
+            y + other.y};
+    }
+
+    vec2 operator-(const vec2& other) const {
+        return { x - other.x,
+            y - other.y };
+    }
+
+    vec2 operator*(double k) const {
+        return { x * k,
+            y * k};
+    }
 };
 
 inline bool compare_vecs(const vec2& a, const vec2& b) {
@@ -61,3 +76,6 @@ inline void log_vec(std::string& name, const vec2& vec) {
     std::cout << vec.y;
     std::cout << " |||" << std::endl;
 }
+
+//
+

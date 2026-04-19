@@ -5,6 +5,10 @@
 #include <vector>
 #include "state.h"
 
+#include <iostream>
+#include <fstream>
+#include <string>
+
 class Space {
 public:
 

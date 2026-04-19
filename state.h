@@ -4,6 +4,16 @@
 struct state {
 	vec2 position{ 0, 0 };
 	vec2 velocity{ 0, 0 };
+
+	state operator+(const state& other) const{
+		return { position + other.position, 
+			velocity + other.velocity};
+	}
+
+	state operator*(double k) const{
+		return { position * k,
+			velocity * k};
+	}
 };
 
 inline bool compare_states(const state& a, const state& b) {

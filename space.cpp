@@ -3,6 +3,12 @@
 #include <vector>
 #include <iostream>
 
+#include <fstream>
+#include <string>
+
+#include "physics.h"
+
+
 Space::Space() {
 
 }
@@ -16,9 +22,9 @@ void Space::set_earth() {
 }
 
 void Space::set_moon() {	
-	moon.state.velocity = { -2000, 90 };
-	//moon.state.position.x = earth.state.position.x + (60.32 * earth.radius);
-	moon.state.position = { 200, 500 };
+	moon.state.velocity = { 0, 0 };
+	moon.state.position.x = earth.state.position.x + (6 * earth.radius);
+	//moon.state.position = { 200, 500 };
 
 	moon.mass = 7e2;
 	moon.radius = earth.radius / 2;
@@ -31,6 +37,7 @@ void Space::set_moon() {
 void Space::generate_space() {
 	set_earth();
 	set_moon();
+
 }
 
 void Space::draw(vec2& cam_pos, double& scale, vec2& screen_center) {
