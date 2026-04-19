@@ -24,9 +24,13 @@ First major milestone. Implemented 4th order Runge-Kutta integrator from first p
 ## Status
 
 **Phase 1: Core Engine** — in progress 
-**Phase 1.5: Spacecraft physics and controls - planned
+<br>
+**Phase 1.5: Spacecraft physics and controls** - planned
+<br>
 **Phase 2: CLI & Scripting** — planned
+<br>
 **Phase 3: Mission Planning** — Planned
+<br>
 
 ---
 
